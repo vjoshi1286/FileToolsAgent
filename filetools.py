@@ -2,17 +2,26 @@ import glob
 import json
 import os
 
-#TODO cleanup the file
+#TODO cleanup and refactor the file
+
+# LLM just returns us the tool_call intent, how to execute it, is upto us
+
 def execute_tool(name, args):
     tools_dir = {
         "list_files": lambda d: list_files(d["directory"], d.get("pattern")),
         "read_file": lambda d: read_file(d["path"]),
         "search_in_files": lambda d: search_in_files(d["directory"], d["pattern"], d.get("file_ext")),
         "delete_file": lambda d: delete_file(d["path"]),
-        "append_to_file": lambda d: append_to_file(d["path"], d["content"])
+        "append_to_file": lambda d: append_to_file(d["path"],d["content"]),
+        "extract_content": lambda d: extract_content(d["message"])
     }
 
     return tools_dir.get(name, lambda d: json.dumps({"error": "Unidentified tool"}))(args)
+
+def extract_content(message):
+    data = json.loads(message)
+    content = data.get("content")
+    return content
 
 def list_files(directory, pattern=None):
     try:

@@ -1,0 +1,121 @@
+[
+  {
+    "name": "list_files",
+    "description": "List files in a directory, optionally filtered by a glob pattern.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string",
+          "description": "Directory path to list"
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Glob pattern like '*.py'"
+        }
+      },
+      "required": [
+        "directory"
+      ]
+    }
+  },
+  {
+    "name": "read_file",
+    "description": "Read the contents of a text file.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "File path to read"
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "search_in_files",
+    "description": "Search for a text or pattern across files in a directory.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string",
+          "description": "Directory to search"
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Text to search for"
+        },
+        "file_ext": {
+          "type": "string",
+          "description": "File extension filter, e.g., '.py,.java' etc"
+        }
+      },
+      "required": [
+        "directory",
+        "pattern"
+      ]
+    }
+  },
+  {
+    "name": "delete_file",
+    "description": "Delete a given file.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "File path to delete"
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "append_to_file",
+    "description": "Writes a given content to a file, optionally creates the file if not exists.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "File path to write to"
+        },
+        "content": {
+          "type": "string",
+          "description": "The content to be written"
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "extract_content",
+    
+    "description": "Extracts the content property from a json in string format",
+    
+    "input_schema": {
+      
+      "type": "object",
+      
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "The content to be written, usually in JSON format"
+        }
+      },
+      
+      "required": [
+        "message"
+      ]
+    }
+  }
+
+]
