@@ -35,7 +35,7 @@ def list_files(directory, pattern=None):
 
 def append_to_file(path, content):
    try: 
-     with open("example.txt", "a") as file:
+     with open(path, "a") as file:
        file.write(content)
      return json.dumps({"path", path})
    except Exception as e:

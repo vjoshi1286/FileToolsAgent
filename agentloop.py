@@ -8,13 +8,43 @@ from filetools import execute_tool
 
 #TODO refactor this code
 
+system_prompt =""" You are a file operations expert
+        Give PRECISE answers, max 2 lines
+        describe multiple files in <file_name>:<description> format description should be in max 2 lines
+        Append the markers like TODO/FIXME store the content as <line_nuber> : <stripped_text_after_marker>
+        Search directories only 1 level, DO NOT search sub-directories 
+        While appending a string content which is json, ALWAYS extract the content part
+    """
+
+def single_llm_call(user_message):
+    load_dotenv()
+    
+    client = anthropic.Anthropic()
+    
+    messages = [ {"role": "user", "content": user_message}]
+    
+    tools = get_tools()
+    llm = os.getenv("LLM")
+    max_tokens = int(os.getenv("MAX_TOKENS",4096))
+
+    response = client.messages.create(
+            model      = llm,
+            max_tokens = max_tokens,
+            tools      = tools,
+            system     = system_prompt,
+            messages   = messages
+            #Context keeps on increasing here
+        )
+    print(response)
+
+
+    
 def agent_loop(user_message):
     
     load_dotenv()
     
     client = anthropic.Anthropic()
 
-    print(f"\nUser: {user_message}\n")
     messages = [{"role": "user", "content": user_message}]
     
     tools = get_tools()
@@ -23,7 +53,8 @@ def agent_loop(user_message):
     llm = os.getenv("LLM")
     max_tokens = int(os.getenv("MAX_TOKENS",4096))
 
-    system_prompt =""" Give PRECISE answers, max 2 lines
+    system_prompt =""" You are a file operations expert
+        Give PRECISE answers, max 2 lines
         describe multiple files in <file_name>:<description> format description should be in max 2 lines
         Append the markers like TODO/FIXME store the content as <line_nuber> : <stripped_text_after_marker>
         Search directories only 1 level, DO NOT search sub-directories 
